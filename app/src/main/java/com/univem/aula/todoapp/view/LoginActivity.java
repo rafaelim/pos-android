@@ -12,13 +12,16 @@ import android.widget.Toast;
 
 import com.univem.aula.todoapp.R;
 import com.univem.aula.todoapp.model.User;
+import com.univem.aula.todoapp.presenter.LoginPresenter;
+import com.univem.aula.todoapp.repository.LoginRepository;
 
 public class LoginActivity extends AppCompatActivity
-        implements View.OnClickListener{
+        implements View.OnClickListener, LoginView {
 
     private EditText loginField;
     private EditText passwordField;
     private Button loginButton;
+    private LoginPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +33,8 @@ public class LoginActivity extends AppCompatActivity
         loginButton = findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(this);
+
+        presenter = new LoginPresenter(new LoginRepository(), this);
     }
 
     @Override
@@ -38,24 +43,25 @@ public class LoginActivity extends AppCompatActivity
         if (viewId == R.id.loginButton) {
             String login = loginField.getText().toString();
             String password = passwordField.getText().toString();
-            if(isNotEmpty(login, password) && userExists(login, password)) {
-//                Toast.makeText(this, login.concat(" - ").concat(password), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                User user = new User(login, password);
-                intent.putExtra("user", user);
-                startActivity(intent);
-                finish();
-            } else {
-                Toast.makeText(this, "User and password cannot be empty!", Toast.LENGTH_SHORT).show();
-            }
+            presenter.login(new User(login, password));
         }
     }
 
-    private boolean isNotEmpty(String login, String password) {
-        return !TextUtils.isEmpty(login) && !TextUtils.isEmpty(password);
+    @Override
+    public void onLoginSuccess(User user) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
+        finish();
     }
 
-    private boolean userExists(String login, String password) {
-        return login.equals("admin") && password.equals("123");
+    @Override
+    public void onLoginError() {
+        Toast.makeText(this, "Error. Try again later!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onUserNotFilledCorrectly() {
+        Toast.makeText(this, "User not filled correctly", Toast.LENGTH_SHORT).show();
     }
 }
