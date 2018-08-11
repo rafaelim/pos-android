@@ -1,4 +1,4 @@
-package com.univem.aula.todoapp;
+package com.univem.aula.todoapp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.univem.aula.todoapp.R;
+import com.univem.aula.todoapp.model.User;
 
 public class LoginActivity extends AppCompatActivity
         implements View.OnClickListener{

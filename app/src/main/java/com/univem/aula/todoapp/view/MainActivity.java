@@ -1,8 +1,11 @@
-package com.univem.aula.todoapp;
+package com.univem.aula.todoapp.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.univem.aula.todoapp.R;
+import com.univem.aula.todoapp.model.User;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.univem.aula.todoapp;
+package com.univem.aula.todoapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
