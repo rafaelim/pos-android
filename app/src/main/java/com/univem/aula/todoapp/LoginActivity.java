@@ -36,8 +36,10 @@ public class LoginActivity extends AppCompatActivity
             String login = loginField.getText().toString();
             String password = passwordField.getText().toString();
             if(isNotEmpty(login, password) && userExists(login, password)) {
-                Toast.makeText(this, login.concat(" - ").concat(password), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, login.concat(" - ").concat(password), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, MainActivity.class);
+                User user = new User(login, password);
+                intent.putExtra("user", user);
                 startActivity(intent);
                 finish();
             } else {
